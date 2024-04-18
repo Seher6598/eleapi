@@ -1,4 +1,4 @@
-
+""
 from workshop.cagri.dbops import DBOps
 from dotenv import load_dotenv
 load_dotenv()
