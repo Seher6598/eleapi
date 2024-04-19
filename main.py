@@ -1,5 +1,4 @@
 
-from workshop.gurkan.dbops import DBOps
 from dotenv import load_dotenv
 from workshop.gurkan.api import sunucuyu_ayaga_kaldir
 
