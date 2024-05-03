@@ -107,6 +107,35 @@ def put_data():
             msg=str(ex.args[0])
         ), 415
 
+@app.route('/api/data/<int:id>', methods=['PATCH'])
+def update_data(id):
+    try:
+        with cx_Oracle.connect(USER, PASSWORD, TNS, encoding="UTF-8", nencoding="UTF-8") as conn:
+            cur = conn.cursor()
+            data = request.get_json()
+            upd_query = "UPDATE ELE_SUPPORT_STRUCT SET"
+            upd_values = []
+            for key, value in data.items():
+                upd_query += f" {key} = :{key},"
+                upd_values.append(value)
+            upd_query = upd_query.rstrip(',') + " WHERE assetid = :id"
+            upd_values.append(id)
+            cur.execute(upd_query, upd_values)
+            conn.commit()
+            return jsonify(
+                status="ok",
+                msg="Veri başarıyla güncellendi"
+            ), 200
+
+    except Exception as ex:
+        return jsonify(
+            status="fail",
+            msg=str(ex.args[0])
+        )
+
+
+
+
 
 
 
